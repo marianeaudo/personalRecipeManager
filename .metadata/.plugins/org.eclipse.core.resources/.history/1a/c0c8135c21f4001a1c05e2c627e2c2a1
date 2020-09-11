@@ -1,0 +1,9 @@
+package com.personalRecipe.bo;
+
+public class Ingredient {
+
+	private String nom;
+	private double quantite;
+	private String unite;
+	
+}

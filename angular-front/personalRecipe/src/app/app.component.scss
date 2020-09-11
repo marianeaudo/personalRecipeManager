@@ -1,0 +1,12 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav-container {
+  display: block;
+  position: relative;
+}
+
+mat-sidenav {
+  width: 200px;
+}

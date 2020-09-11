@@ -1,0 +1,5 @@
+package com.personalRecipe.bo;
+
+public class Instruction {
+
+}

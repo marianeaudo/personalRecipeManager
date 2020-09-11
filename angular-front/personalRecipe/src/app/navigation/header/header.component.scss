@@ -1,0 +1,32 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover, a:active {
+  color: white;
+}
+
+.navigation-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+mat-toolbar {
+  height: 10vh;
+}
+
+.selected {
+  color: white;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.toggle:hover {
+  cursor: pointer;
+}

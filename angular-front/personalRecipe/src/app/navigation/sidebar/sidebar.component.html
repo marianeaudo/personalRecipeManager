@@ -1,0 +1,6 @@
+<mat-nav-list>
+  <a *ngFor="let header of headers" mat-list-item [routerLink]="header.route" (click)="onToggle()">
+    <mat-icon>{{ header.icon }}</mat-icon>
+    <span class="nav-caption">{{ header.name }}</span>
+  </a>
+</mat-nav-list>
