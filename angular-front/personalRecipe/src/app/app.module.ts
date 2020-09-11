@@ -10,6 +10,7 @@ import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidebarComponent } from './navigation/sidebar/sidebar.component';
 import { MaterialModule } from './material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,9 +19,10 @@ import { MaterialModule } from './material.module';
     FindRecipeComponent,
     HeaderComponent,
     SidebarComponent
-  ],
+    ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,

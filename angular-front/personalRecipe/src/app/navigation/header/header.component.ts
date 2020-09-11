@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.routerSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log(event['url']);
         this.applicationService.setSelectedHeader(
             this.headers.find((header) => header.route === event['url'])
         );

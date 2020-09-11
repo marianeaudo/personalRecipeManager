@@ -1,0 +1,30 @@
+<div class="container">
+  
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table">
+            <tr>
+              <td class="titre">Recette</td>
+              <td class="titre">Nombre de personnes</td>
+              <td class="titre"></td>
+            </tr>         
+            <tr class="selection" *ngFor="let recette of recettes" (click)="onSelectedRecette(recette)">
+              <td>{{ recette.nom }}</td>
+              <td>{{ recette.nbPersonnes }} 
+              </td>
+              <td>
+                <button (click)="onAugmenterQuantite(recette)"><i class="fa fa-plus"></i></button>
+                <button (click)="onDiminuerQuantite(recette)"><i class="fa fa-minus"></i></button>
+              </td>
+              </tr>
+        </table>
+      </div>
+  
+      <div class="col-md-6">
+        <app-detail-recette *ngIf="recetteSelection, else infoText" [recette]="recetteSelection"></app-detail-recette>
+        <ng-template #infoText>
+          <p>Veuillez sélectionner une recette!</p>
+      </ng-template>
+      </div>
+    </div>
+  </div>

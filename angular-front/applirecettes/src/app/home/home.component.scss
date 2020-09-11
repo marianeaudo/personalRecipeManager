@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "Raleway";
+    src: url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+}
+
+.selection:hover {
+    background-color: lightgrey;
+}
+
+h1 {
+    font-family: Raleway, Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 10px;
+}
+
+.table {
+    text-align: center;
+}
+
+.titre {
+    font-weight: bold;
+}

@@ -3,6 +3,7 @@ package com.personalRecipe.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ public class RecetteWS {
 	@Autowired
 	RecetteManager recetteManager;
 
+	@CrossOrigin
 	@GetMapping(value="recettes")
 	public List<Recette> getRecettes() {
 		return recetteManager.getAll();

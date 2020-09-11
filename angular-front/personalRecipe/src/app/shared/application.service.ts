@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Header } from './application.model';
+import { Header} from './application.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ApplicationService {
   private selectedHeader: Header;
   selectedHeaderSubject = new Subject<Header>();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getHeaders(): Header[] {
     return [...this.headers];
