@@ -1,5 +1,0 @@
-package com.personalRecipe.dal;
-
-public interface InstructionRepository {
-
-}
