@@ -1,0 +1,18 @@
+<div class="centrage">
+  <p *ngIf="!isSelectedRecipe">
+    Veuillez sélectionner une recette.
+  </p>
+
+  <div *ngIf="isSelectedRecipe">
+    <p class="titre">{{ selectedRecipe.nom }}</p>
+    <p>Pour {{ selectedRecipe.nbPersonnes }} personnes</p>
+    <div *ngFor="let ingredient of selectedRecipe.ingredients">
+      <p>{{ ingredient.quantite | number : '1.0-0': 'fr' }} {{ ingredient.unite }} {{ ingredient.nom }} </p>
+    </div>
+    <div *ngFor="let instruction of selectedRecipe.instructions">
+      <p>{{ instruction.description }} </p>
+    </div>
+    <button mat-button color="warn" (click)="onDeleteRecipe(selectedRecipe)">Supprimer la recette</button>
+
+  </div>
+</div>

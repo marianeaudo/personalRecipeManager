@@ -23,5 +23,11 @@ public class Instruction {
     @JsonBackReference
 	private Recette recette;
 	
+	public Instruction() {
+	}	
+	
+	public Instruction(String description) {
+		this.description = description;
+	}	
 
 }

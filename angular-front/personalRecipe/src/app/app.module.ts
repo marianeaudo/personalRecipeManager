@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -11,6 +13,9 @@ import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidebarComponent } from './navigation/sidebar/sidebar.component';
 import { MaterialModule } from './material.module';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -18,7 +23,8 @@ import { MaterialModule } from './material.module';
     AddRecipeComponent,
     FindRecipeComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    RecipeDetailsComponent
     ],
   imports: [
     BrowserModule,

@@ -26,8 +26,18 @@ public class Recette {
 	private int nbPersonnes;
 	private String nom;
 	private String pathPhoto;
-	@OneToMany(mappedBy = "recette")
+	@OneToMany(mappedBy = "recette", cascade = CascadeType.ALL)
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
-	@OneToMany(mappedBy = "recette")
+	@OneToMany(mappedBy = "recette", cascade = CascadeType.ALL)
 	private List<Instruction> instructions = new ArrayList<Instruction>();
+	
+	public Recette() {
+	}
+	
+	public Recette(int nbPersonnes, String nom, String pathPhoto) {
+		this.nbPersonnes = nbPersonnes;
+		this.nom = nom;
+		this.pathPhoto = pathPhoto;
+	}
+	
 }

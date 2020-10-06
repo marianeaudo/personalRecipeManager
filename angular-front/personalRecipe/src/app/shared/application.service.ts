@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Subject } from 'rxjs';
-import { Header} from './application.model';
+import { Header, Recipe} from './application.model';
 
 @Injectable({
   providedIn: 'root'

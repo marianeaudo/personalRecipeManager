@@ -1,0 +1,13 @@
+.titre {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.centrage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%, -50%);
+
+}

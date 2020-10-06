@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personalRecipe.bll.RecetteManager;
@@ -20,6 +23,12 @@ public class RecetteWS {
 	@GetMapping(value="recettes")
 	public List<Recette> getRecettes() {
 		return recetteManager.getAll();
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="deleteRecette")
+	public void deleteRecette(@RequestParam(name="id") int id) {
+		recetteManager.deleteRecipe(id);
 	}
 	
 }

@@ -25,4 +25,13 @@ public class Ingredient {
     @JsonBackReference
 	private Recette recette;
 	
+	public Ingredient() {
+	}
+	
+	public Ingredient(String nom, double quantite, String unite) {
+		this.nom = nom;
+		this.quantite = quantite;
+		this.unite = unite;
+	}
+	
 }

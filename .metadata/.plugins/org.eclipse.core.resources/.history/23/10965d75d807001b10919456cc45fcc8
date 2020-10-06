@@ -1,0 +1,5 @@
+package com.personalRecipe.bll;
+
+public class IngredientManagerImpl {
+
+}

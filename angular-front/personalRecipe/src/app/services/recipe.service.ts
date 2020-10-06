@@ -13,6 +13,14 @@ export class RecipeService {
   recipesSubscription: Subscription;
   recipesSubject = new Subject<Recipe[]>();
 
+  private selectedRecipe: Recipe;
+  selectedRecipeSubject = new Subject<Recipe>();
+
+  deleteRecipeSubscription: Subscription;
+
+  private isSelectedRecipe = false;
+  isSelectedRecipeSubject = new Subject<boolean>();
+
   constructor(private http: HttpClient, private uIService: UIService) { }
 
   getRecipes(): void {
@@ -30,5 +38,28 @@ export class RecipeService {
       );
      }
     );
+  }
+
+  setSelectedRecipe(recipe: Recipe): void {
+    this.selectedRecipe = recipe;
+    this.selectedRecipeSubject.next({...this.selectedRecipe});
+    this.isSelectedRecipe = true;
+    this.isSelectedRecipeSubject.next(this.isSelectedRecipe);
+  }
+
+  deleteRecipe(recipe: Recipe): void {
+    this.deleteRecipeSubscription = this.http.get('http://localhost:8080/deleteRecette?id=' + recipe.id).subscribe(
+      () => {
+        this.getRecipes();
+        this.setSelectedRecipe(null);
+        this.isSelectedRecipe = false;
+        this.isSelectedRecipeSubject.next(this.isSelectedRecipe);
+      }, (error) => {
+        this.uIService.showSnackbar(
+          'Une erreur est survenue, veuillez réessayer.'
+        );
+      }
+    );
+
   }
 }

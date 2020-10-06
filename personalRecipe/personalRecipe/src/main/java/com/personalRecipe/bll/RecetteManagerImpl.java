@@ -18,5 +18,15 @@ public class RecetteManagerImpl implements RecetteManager{
 	public List<Recette> getAll() {
 		return recetteDAO.findAll();
 	}
+	
+	@Override
+	public void deleteRecipe(int id) {
+		recetteDAO.deleteById(id);
+	}
+	
+	@Override
+	public void createRecipe(Recette recette) {
+		recetteDAO.save(recette);
+	}
 
 }
