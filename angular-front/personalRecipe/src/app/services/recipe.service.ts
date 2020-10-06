@@ -10,21 +10,17 @@ import { UIService } from '../shared/ui.service';
 export class RecipeService {
 
   recipes: Recipe[] = [];
-  recipesSubscription: Subscription;
   recipesSubject = new Subject<Recipe[]>();
 
-  private selectedRecipe: Recipe;
+  selectedRecipe: Recipe;
   selectedRecipeSubject = new Subject<Recipe>();
 
-  deleteRecipeSubscription: Subscription;
-
-  private isSelectedRecipe = false;
   isSelectedRecipeSubject = new Subject<boolean>();
 
   constructor(private http: HttpClient, private uIService: UIService) { }
 
   getRecipes(): void {
-    this.recipesSubscription = this.http.get('http://localhost:8080/recettes').subscribe(
+    this.http.get('http://localhost:8080/recettes').subscribe(
      (recipes: Recipe[]) => {
        this.recipes = recipes;
        this.recipes.sort((a, b) => {
@@ -43,17 +39,15 @@ export class RecipeService {
   setSelectedRecipe(recipe: Recipe): void {
     this.selectedRecipe = recipe;
     this.selectedRecipeSubject.next({...this.selectedRecipe});
-    this.isSelectedRecipe = true;
-    this.isSelectedRecipeSubject.next(this.isSelectedRecipe);
+    this.isSelectedRecipeSubject.next(true);
   }
 
   deleteRecipe(recipe: Recipe): void {
-    this.deleteRecipeSubscription = this.http.get('http://localhost:8080/deleteRecette?id=' + recipe.id).subscribe(
+    this.http.get('http://localhost:8080/deleteRecette?id=' + recipe.id).subscribe(
       () => {
         this.getRecipes();
         this.setSelectedRecipe(null);
-        this.isSelectedRecipe = false;
-        this.isSelectedRecipeSubject.next(this.isSelectedRecipe);
+        this.isSelectedRecipeSubject.next(false);
       }, (error) => {
         this.uIService.showSnackbar(
           'Une erreur est survenue, veuillez réessayer.'
