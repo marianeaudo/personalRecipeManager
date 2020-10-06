@@ -1,4 +1,0 @@
-<h2>{{ recette.nom }}</h2>
-<img class="img-responsive" style="max-height: 300px;" [src]=recette.pathPhoto>
-<div *ngFor="let ingredient of recette.ingredients">{{ ingredient.nom }} - {{ ingredient.quantite | number : '' : 'fr' }} {{ ingredient.unite }}</div>
-<div *ngFor="let instruction of recette.instructions; let i = index">Etape {{ i+1 }} - {{ instruction.description }} </div>
