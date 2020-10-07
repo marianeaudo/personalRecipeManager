@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { Recipe } from '../shared/application.model';
-import { UIService } from '../shared/ui.service';
+import { Subject } from 'rxjs';
+import { Recipe } from './application.model';
+import { UIService } from './ui.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class RecipeService {
   selectedRecipeSubject = new Subject<Recipe>();
 
   isSelectedRecipeSubject = new Subject<boolean>();
-  isRecipesSubject = new Subject<boolean>();
+  isLoadingSubject = new Subject<boolean>();
 
   constructor(private http: HttpClient, private uIService: UIService) {}
 
@@ -27,13 +27,13 @@ export class RecipeService {
           return a.nom > b.nom ? 1 : a.nom < b.nom ? -1 : 0;
         });
         this.recipesSubject.next([...this.recipes]);
-        this.isRecipesSubject.next(true);
+        this.isLoadingSubject.next(true);
       },
       (error) => {
         this.uIService.showSnackbar(
           'Une erreur est survenue, veuillez réessayer.'
         );
-        this.isRecipesSubject.next(false);
+        this.isLoadingSubject.next(false);
       }
     );
   }

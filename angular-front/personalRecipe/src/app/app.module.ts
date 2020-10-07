@@ -5,6 +5,8 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +14,6 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidebarComponent } from './navigation/sidebar/sidebar.component';
-import { MaterialModule } from './material.module';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 registerLocaleData(localeFr);
@@ -32,7 +33,9 @@ registerLocaleData(localeFr);
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

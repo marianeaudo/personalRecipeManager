@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { RecipeService } from '../services/recipe.service';
+import { RecipeService } from '../shared/recipe.service';
 import { Recipe } from '../shared/application.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,8 +18,8 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Recipe>();
   selectedRecipe: Recipe;
   selectedRecipeSubscription: Subscription;
-  isRecipes = false;
-  isRecipesSubscription: Subscription;
+  isLoading = false;
+  isLoadingSubscription: Subscription;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private recipeService: RecipeService, private applicationService: ApplicationService) {
@@ -28,9 +28,9 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.applicationService.translateMatPaginator(this.paginator);
 
-    this.isRecipesSubscription = this.recipeService.isRecipesSubject.subscribe(
-      (isRecipes: boolean) => {
-        this.isRecipes = isRecipes;
+    this.isLoadingSubscription = this.recipeService.isLoadingSubject.subscribe(
+      (isLoading: boolean) => {
+        this.isLoading = isLoading;
       }
     );
     this.recipesSubscription = this.recipeService.recipesSubject.subscribe(
@@ -77,6 +77,6 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.recipesSubscription.unsubscribe();
-    this.isRecipesSubscription.unsubscribe();
+    this.isLoadingSubscription.unsubscribe();
   }
 }

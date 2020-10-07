@@ -1,1 +1,54 @@
-<p>add-recipe works!</p>
+<div class="container">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" id="name" formControlName="name" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Lien de l'image</label>
+            <input type="text" id="imagePath" formControlName="imagePath" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div formArrayName="ingredients">
+            <div *ngFor="let value of recipeForm.get('ingredients').value; let i = index" [formGroupName]="i">
+              <label for="ingredientName">Nom</label>
+              <input type="text" id="ingredientName" class="form-control" formControlName="ingredientName">
+              <label for="ingredientNumber">Quantité</label>
+              <input type="number" id="ingredientNumber" class="form-control" formcontrolName="ingredientQuantity">
+              <label for="ingredientUnit">Unité</label>
+              <input type="text" id="ingredientUnit" class="form-control" formControlName="ingredientUnit">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div formArrayName="instructions">
+            <div *ngFor="let instructions of recipeForm.get('instructions').value; let i = index" [formGroupName]="i">
+              <label for="instructionDescription">Description</label>
+              <input type="text" id="instructionDescription" class="form-control"
+                formControlName="instructionDescription">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button type="button" class="btn btn-success" (click)="onAddIngredient()">Ajouter un ingredient</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-success" (click)="onAddInstruction()">Ajouter une instruction</button>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Enregistrer</button>
+    </form>
+  </div>
+</div>
