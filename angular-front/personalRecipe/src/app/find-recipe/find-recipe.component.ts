@@ -18,21 +18,27 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Recipe>();
   selectedRecipe: Recipe;
   selectedRecipeSubscription: Subscription;
+  isRecipes = false;
+  isRecipesSubscription: Subscription;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(
-    private recipeService: RecipeService,
-    private applicationService: ApplicationService
-  ) {}
+  constructor(private recipeService: RecipeService, private applicationService: ApplicationService) {
+  }
 
   ngOnInit(): void {
     this.applicationService.translateMatPaginator(this.paginator);
+
+    this.isRecipesSubscription = this.recipeService.isRecipesSubject.subscribe(
+      (isRecipes: boolean) => {
+        this.isRecipes = isRecipes;
+      }
+    );
     this.recipesSubscription = this.recipeService.recipesSubject.subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
         this.dataSource = new MatTableDataSource<Recipe>(this.recipes);
         this.dataSource.paginator = this.paginator;
-      }
+      },
     );
     this.recipeService.getRecipes();
     this.selectedRecipeSubscription = this.recipeService.selectedRecipeSubject.subscribe(
@@ -71,5 +77,6 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.recipesSubscription.unsubscribe();
+    this.isRecipesSubscription.unsubscribe();
   }
 }
