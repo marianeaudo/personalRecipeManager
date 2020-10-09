@@ -30,6 +30,10 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  onUpdateRecipe(): void {
+
+  }
+
   onDeleteRecipe(recipe: Recipe): void {
     this.recipeService.deleteRecipe(recipe);
   }

@@ -15,4 +15,5 @@ public interface RecetteManager {
 	public Recette findById(int id);
 	public void addIngredient(int id, Ingredient ingredient);
 	public void addInstruction(int id, Instruction instruction);
+	public int getLastAddedRecipeId();
 }

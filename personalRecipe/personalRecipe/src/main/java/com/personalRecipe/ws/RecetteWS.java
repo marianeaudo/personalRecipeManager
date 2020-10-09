@@ -56,6 +56,12 @@ public class RecetteWS {
 		Instruction instruction = new Instruction(description);
 		this.recetteManager.addInstruction(Integer.parseInt(id), instruction);
 	}
+	
+	@CrossOrigin
+	@RequestMapping("getLastAddedRecipeId")
+	public int getLastAddedRecipe() {
+		return this.recetteManager.getLastAddedRecipeId();
+	}
 
 	@CrossOrigin
 	@RequestMapping(value = "deleteRecette")

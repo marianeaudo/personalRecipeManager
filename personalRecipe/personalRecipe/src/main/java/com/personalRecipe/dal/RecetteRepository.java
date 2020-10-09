@@ -6,4 +6,6 @@ import com.personalRecipe.bo.Recette;
 
 public interface RecetteRepository extends JpaRepository<Recette, Integer>{
 	
+	Recette findFirstByOrderByIdDesc();
+	
 }

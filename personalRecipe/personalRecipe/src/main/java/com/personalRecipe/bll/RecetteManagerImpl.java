@@ -60,5 +60,10 @@ public class RecetteManagerImpl implements RecetteManager{
 		
 	}
 
+	@Override
+	public int getLastAddedRecipeId() {
+		return recetteDAO.findFirstByOrderByIdDesc().getId();
+	}
+
 
 }

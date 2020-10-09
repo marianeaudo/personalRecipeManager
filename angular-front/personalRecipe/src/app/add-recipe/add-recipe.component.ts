@@ -52,6 +52,7 @@ export class AddRecipeComponent implements OnInit {
 
   onSubmit(): void {
     this.recipeService.addRecipe(this.recipeForm.value);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 

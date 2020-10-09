@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Ingredient, Instruction, Recipe } from './application.model';
 import { UIService } from './ui.service';
 
@@ -54,26 +54,27 @@ export class RecipeService {
           '&nbPersonnes=' +
           recipe.nbPersonnes
       )
-      .subscribe(() => {
+      .subscribe((data) => {
         this.addIngredientToRecipe(recipe);
         this.addInstructionToRecipe(recipe);
+        this.uIService.showSnackbar(
+          'La recette a bien été ajoutée.'
+        );
+      }, (error) => {
+        this.uIService.showSnackbar(
+          'Une erreur est survenue, veuillez réessayer.'
+        );
       });
   }
 
   addIngredientToRecipe(recipe: Recipe): void {
-    let recipes: Recipe[];
-    this.http.get('http://localhost:8080/recettes').subscribe(
-      (recipesTemp: Recipe[]) => {
-        recipes = recipesTemp;
-        recipes.sort((a, b) => {
-          return a.id < b.id ? 1 : a.id > b.id ? -1 : 0;
-        });
-        const recipeId = recipes[0].id;
+    this.http.get('http://localhost:8080/getLastAddedRecipeId').subscribe(
+      (id: number) => {
         recipe.ingredients.forEach((ingredient: Ingredient) => {
           this.http
           .get(
             'http://localhost:8080/addIngredient?id=' +
-              recipeId +
+              id +
               '&nom=' +
               ingredient.nom +
               '&quantite=' +
@@ -83,29 +84,31 @@ export class RecipeService {
           )
           .subscribe();
         });
+      }, (error) => {
+        this.uIService.showSnackbar(
+          'Une erreur est survenue, veuillez réessayer.'
+        );
       }
     );
   }
 
   addInstructionToRecipe(recipe: Recipe): void {
-    let recipes: Recipe[];
-    this.http.get('http://localhost:8080/recettes').subscribe(
-      (recipesTemp: Recipe[]) => {
-        recipes = recipesTemp;
-        recipes.sort((a, b) => {
-          return a.id < b.id ? 1 : a.id > b.id ? -1 : 0;
-        });
-        const recipeId = recipes[0].id;
+    this.http.get('http://localhost:8080/getLastAddedRecipeId').subscribe(
+      (id: number) => {
         recipe.instructions.forEach((instruction: Instruction) => {
           this.http
           .get(
             'http://localhost:8080/addInstruction?id=' +
-              recipeId +
+              id +
               '&description=' +
               instruction.description
           )
           .subscribe();
         });
+      }, (error) => {
+        this.uIService.showSnackbar(
+          'Une erreur est survenue, veuillez réessayer.'
+        );
       }
     );
   }
@@ -126,5 +129,9 @@ export class RecipeService {
         }
       );
   }
+
+  // getRecipeId(): Observable<number> {
+
+  // }
 
 }
