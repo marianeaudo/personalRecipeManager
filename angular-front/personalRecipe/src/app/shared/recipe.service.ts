@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Ingredient, Instruction, Recipe } from './application.model';
 import { UIService } from './ui.service';
 
@@ -23,9 +23,6 @@ export class RecipeService {
     this.http.get('http://localhost:8080/recettes').subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
-        this.recipes.sort((a, b) => {
-          return a.nom > b.nom ? 1 : a.nom < b.nom ? -1 : 0;
-        });
         this.recipesSubject.next([...this.recipes]);
         this.isLoadingSubject.next(true);
       },
@@ -129,9 +126,5 @@ export class RecipeService {
         }
       );
   }
-
-  // getRecipeId(): Observable<number> {
-
-  // }
 
 }

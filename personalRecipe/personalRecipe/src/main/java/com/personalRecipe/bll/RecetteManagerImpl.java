@@ -19,7 +19,7 @@ public class RecetteManagerImpl implements RecetteManager{
 	
 	@Override
 	public List<Recette> getAll() {
-		return recetteDAO.findAll();
+		return recetteDAO.findByOrderByNomAsc();
 	}
 	
 	@Override
