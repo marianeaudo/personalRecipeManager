@@ -12,3 +12,38 @@
 .hidden {
   visibility: hidden;
 }
+
+.tableImage {
+  max-height: 70px;
+  max-width: 70px;
+}
+
+.tableDisplay, .recipeDetailsDisplay {
+  height: 88vh;
+}
+
+.tableDisplay {
+  background-color: red;
+}
+
+.recipeDetailsDisplay {
+  background-color: green;
+}
+
+.mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content:center;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-header-cell {
+  text-align: center;
+}

@@ -11,8 +11,4 @@ public interface RecetteManager {
 	public List<Recette> getAll();
 	public void deleteRecipe(int id);
 	public void createRecipe(Recette recette);
-	public Recette findById(int id);
-	public void addIngredient(int id, Ingredient ingredient);
-	public void addInstruction(int id, Instruction instruction);
-	public int getLastAddedRecipeId();
 }

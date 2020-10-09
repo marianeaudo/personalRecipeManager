@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,40 +27,11 @@ public class RecetteWS {
 	public List<Recette> getRecettes() {
 		return recetteManager.getAll();
 	}
-
+	
 	@CrossOrigin
-	@RequestMapping(value = "addRecette")
-	public void addRecette(@RequestParam(name = "nom") String nom, @RequestParam(name = "pathPhoto") String pathPhoto,
-			@RequestParam(name = "nbPersonnes") int nbPersonnes) {
-		Recette recette = new Recette(nbPersonnes, nom, pathPhoto);
+	@PostMapping(value = "createRecette")
+	public void createRecette(@RequestBody Recette recette) {
 		this.recetteManager.createRecipe(recette);
-	}
-
-	@CrossOrigin
-	@RequestMapping(value = "getRecette")
-	public Recette getRecette(@RequestParam(name = "id") int id) {
-		return this.recetteManager.findById(id);
-	}
-
-	@CrossOrigin
-	@RequestMapping("addIngredient")
-	public void addIngredient(@RequestParam(name = "id") String id, @RequestParam(name = "nom") String nom,
-			@RequestParam(name = "quantite") String quantite, @RequestParam(name = "unite") String unite) {
-		Ingredient ingredient = new Ingredient(nom, Integer.parseInt(quantite), unite);
-		this.recetteManager.addIngredient(Integer.parseInt(id), ingredient);
-	}
-	
-	@CrossOrigin
-	@RequestMapping("addInstruction")
-	public void addIngredient(@RequestParam(name = "id") String id, @RequestParam(name = "description") String description) {
-		Instruction instruction = new Instruction(description);
-		this.recetteManager.addInstruction(Integer.parseInt(id), instruction);
-	}
-	
-	@CrossOrigin
-	@RequestMapping("getLastAddedRecipeId")
-	public int getLastAddedRecipe() {
-		return this.recetteManager.getLastAddedRecipeId();
 	}
 
 	@CrossOrigin

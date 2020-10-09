@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Ingredient, Instruction, Recipe } from './application.model';
+import { Recipe } from './application.model';
 import { UIService } from './ui.service';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +17,13 @@ export class RecipeService {
   isSelectedRecipeSubject = new Subject<boolean>();
   isLoadingSubject = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private uIService: UIService) {}
+  constructor(
+    private uIService: UIService,
+    private httpService: HttpService
+  ) {}
 
   getRecipes(): void {
-    this.http.get('http://localhost:8080/recettes').subscribe(
+    this.httpService.getRecipes$().subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
         this.recipesSubject.next([...this.recipes]);
@@ -41,47 +44,12 @@ export class RecipeService {
     this.isSelectedRecipeSubject.next(true);
   }
 
-  addRecipe(recipe: Recipe): void {
-    this.http
-      .get(
-        'http://localhost:8080/addRecette?nom=' +
-          recipe.nom +
-          '&pathPhoto=' +
-          recipe.pathPhoto +
-          '&nbPersonnes=' +
-          recipe.nbPersonnes
-      )
-      .subscribe((data) => {
-        this.addIngredientToRecipe(recipe);
-        this.addInstructionToRecipe(recipe);
-        this.uIService.showSnackbar(
-          'La recette a bien été ajoutée.'
-        );
-      }, (error) => {
-        this.uIService.showSnackbar(
-          'Une erreur est survenue, veuillez réessayer.'
-        );
-      });
-  }
-
-  addIngredientToRecipe(recipe: Recipe): void {
-    this.http.get('http://localhost:8080/getLastAddedRecipeId').subscribe(
-      (id: number) => {
-        recipe.ingredients.forEach((ingredient: Ingredient) => {
-          this.http
-          .get(
-            'http://localhost:8080/addIngredient?id=' +
-              id +
-              '&nom=' +
-              ingredient.nom +
-              '&quantite=' +
-              ingredient.quantite +
-              '&unite=' +
-              ingredient.unite
-          )
-          .subscribe();
-        });
-      }, (error) => {
+  createRecipe(recipe: Recipe): void {
+    this.httpService.addRecipe$(recipe).subscribe(
+      () => {
+        this.uIService.showSnackbar('La recette a bien été ajoutée.');
+      },
+      (error) => {
         this.uIService.showSnackbar(
           'Une erreur est survenue, veuillez réessayer.'
         );
@@ -89,42 +57,18 @@ export class RecipeService {
     );
   }
 
-  addInstructionToRecipe(recipe: Recipe): void {
-    this.http.get('http://localhost:8080/getLastAddedRecipeId').subscribe(
-      (id: number) => {
-        recipe.instructions.forEach((instruction: Instruction) => {
-          this.http
-          .get(
-            'http://localhost:8080/addInstruction?id=' +
-              id +
-              '&description=' +
-              instruction.description
-          )
-          .subscribe();
-        });
-      }, (error) => {
+  deleteRecipe(id: number): void {
+    this.httpService.deleteRecipe$(id).subscribe(
+      () => {
+        this.getRecipes();
+        this.setSelectedRecipe(null);
+        this.isSelectedRecipeSubject.next(false);
+      },
+      (error) => {
         this.uIService.showSnackbar(
           'Une erreur est survenue, veuillez réessayer.'
         );
       }
     );
   }
-
-  deleteRecipe(recipe: Recipe): void {
-    this.http
-      .get('http://localhost:8080/deleteRecette?id=' + recipe.id)
-      .subscribe(
-        () => {
-          this.getRecipes();
-          this.setSelectedRecipe(null);
-          this.isSelectedRecipeSubject.next(false);
-        },
-        (error) => {
-          this.uIService.showSnackbar(
-            'Une erreur est survenue, veuillez réessayer.'
-          );
-        }
-      );
-  }
-
 }

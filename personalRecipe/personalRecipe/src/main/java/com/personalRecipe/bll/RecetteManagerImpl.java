@@ -32,36 +32,4 @@ public class RecetteManagerImpl implements RecetteManager{
 		recetteDAO.save(recette);
 	}
 
-	@Override
-	public Recette findById(int id) {
-		return recetteDAO.findById(id).get();
-	}
-
-	@Override
-	public void addIngredient(int id, Ingredient ingredient) {
-		Recette recette = recetteDAO.findById(id).get();
-		List<Ingredient> ingredients = new ArrayList<Ingredient>();
-		ingredients.add(ingredient);
-		recette.setIngredients(ingredients);
-		ingredients.forEach(ingredientTemp -> ingredientTemp.setRecette(recette));
-		recetteDAO.save(recette);
-	}
-
-	@Override
-	public void addInstruction(int id, Instruction instruction) {
-		Recette recette = recetteDAO.findById(id).get();
-		List<Instruction> instructions = new ArrayList<Instruction>();
-		instructions.add(instruction);
-		recette.setInstructions(instructions);
-		instructions.forEach(instructionTemp -> instructionTemp.setRecette(recette));
-		recetteDAO.save(recette);
-		
-	}
-
-	@Override
-	public int getLastAddedRecipeId() {
-		return recetteDAO.findFirstByOrderByIdDesc().getId();
-	}
-
-
 }

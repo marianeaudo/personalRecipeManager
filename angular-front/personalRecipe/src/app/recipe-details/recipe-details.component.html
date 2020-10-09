@@ -6,6 +6,7 @@
   <div *ngIf="isSelectedRecipe">
     <p class="titre">{{ selectedRecipe.nom }}</p>
     <p>Pour {{ selectedRecipe.nbPersonnes }} personnes</p>
+    <img class="displayPhoto" [src]="selectedRecipe.pathPhoto" [alt]="selectedRecipe.nom">
     <div *ngFor="let ingredient of selectedRecipe.ingredients">
       <p>{{ ingredient.quantite | number : '1.0-0': 'fr' }} {{ ingredient.unite }} {{ ingredient.nom }} </p>
     </div>

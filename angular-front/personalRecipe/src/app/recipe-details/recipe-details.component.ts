@@ -35,7 +35,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteRecipe(recipe: Recipe): void {
-    this.recipeService.deleteRecipe(recipe);
+    this.recipeService.deleteRecipe(recipe.id);
   }
 
   ngOnDestroy(): void {
