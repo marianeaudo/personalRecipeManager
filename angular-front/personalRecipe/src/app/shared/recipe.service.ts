@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Recipe } from './application.model';
+import { Ingredient, Instruction, Recipe } from './application.model';
 import { UIService } from './ui.service';
 
 @Injectable({
@@ -44,6 +44,72 @@ export class RecipeService {
     this.isSelectedRecipeSubject.next(true);
   }
 
+  addRecipe(recipe: Recipe): void {
+    this.http
+      .get(
+        'http://localhost:8080/addRecette?nom=' +
+          recipe.nom +
+          '&pathPhoto=' +
+          recipe.pathPhoto +
+          '&nbPersonnes=' +
+          recipe.nbPersonnes
+      )
+      .subscribe(() => {
+        this.addIngredientToRecipe(recipe);
+        this.addInstructionToRecipe(recipe);
+      });
+  }
+
+  addIngredientToRecipe(recipe: Recipe): void {
+    let recipes: Recipe[];
+    this.http.get('http://localhost:8080/recettes').subscribe(
+      (recipesTemp: Recipe[]) => {
+        recipes = recipesTemp;
+        recipes.sort((a, b) => {
+          return a.id < b.id ? 1 : a.id > b.id ? -1 : 0;
+        });
+        const recipeId = recipes[0].id;
+        recipe.ingredients.forEach((ingredient: Ingredient) => {
+          this.http
+          .get(
+            'http://localhost:8080/addIngredient?id=' +
+              recipeId +
+              '&nom=' +
+              ingredient.nom +
+              '&quantite=' +
+              ingredient.quantite +
+              '&unite=' +
+              ingredient.unite
+          )
+          .subscribe();
+        });
+      }
+    );
+  }
+
+  addInstructionToRecipe(recipe: Recipe): void {
+    let recipes: Recipe[];
+    this.http.get('http://localhost:8080/recettes').subscribe(
+      (recipesTemp: Recipe[]) => {
+        recipes = recipesTemp;
+        recipes.sort((a, b) => {
+          return a.id < b.id ? 1 : a.id > b.id ? -1 : 0;
+        });
+        const recipeId = recipes[0].id;
+        recipe.instructions.forEach((instruction: Instruction) => {
+          this.http
+          .get(
+            'http://localhost:8080/addInstruction?id=' +
+              recipeId +
+              '&description=' +
+              instruction.description
+          )
+          .subscribe();
+        });
+      }
+    );
+  }
+
   deleteRecipe(recipe: Recipe): void {
     this.http
       .get('http://localhost:8080/deleteRecette?id=' + recipe.id)
@@ -60,4 +126,5 @@ export class RecipeService {
         }
       );
   }
+
 }

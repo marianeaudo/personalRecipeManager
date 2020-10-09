@@ -4,29 +4,37 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
-            <label for="name">Nom</label>
-            <input type="text" id="name" formControlName="name" class="form-control">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" formControlName="nom" class="form-control">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
-            <label for="imagePath">Lien de l'image</label>
-            <input type="text" id="imagePath" formControlName="imagePath" class="form-control">
+            <label for="pathPhoto">Lien de l'image</label>
+            <input type="text" id="pathPhoto" formControlName="pathPhoto" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="nbPersonnes">Nombre de personnes</label>
+            <input type="number" id="nbPersonnes" formControlName="nbPersonnes" class="form-control">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
           <div formArrayName="ingredients">
-            <div *ngFor="let value of recipeForm.get('ingredients').value; let i = index" [formGroupName]="i">
-              <label for="ingredientName">Nom</label>
-              <input type="text" id="ingredientName" class="form-control" formControlName="ingredientName">
-              <label for="ingredientNumber">Quantité</label>
-              <input type="number" id="ingredientNumber" class="form-control" formcontrolName="ingredientQuantity">
-              <label for="ingredientUnit">Unité</label>
-              <input type="text" id="ingredientUnit" class="form-control" formControlName="ingredientUnit">
+            <div *ngFor="let value of recipeForm.get('ingredients')['controls']; let i = index" [formGroupName]="i">
+              <label for="nom">Nom</label>
+              <input type="text" id="nom" class="form-control" formControlName="nom">
+              <label for="quantite">Quantité</label>
+              <input type="number" id="quantite" class="form-control" formControlName="quantite">
+              <label for="unite">Unité</label>
+              <input type="text" id="unite" class="form-control" formControlName="unite">
             </div>
           </div>
         </div>
@@ -34,21 +42,22 @@
       <div class="row">
         <div class="col-xs-12">
           <div formArrayName="instructions">
-            <div *ngFor="let instructions of recipeForm.get('instructions').value; let i = index" [formGroupName]="i">
-              <label for="instructionDescription">Description</label>
-              <input type="text" id="instructionDescription" class="form-control"
-                formControlName="instructionDescription">
+            <div *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
+              <label for="description">Description</label>
+              <input type="text" id="description" class="form-control"
+                formControlName="description">
             </div>
           </div>
         </div>
       </div>
       <div>
-        <button type="button" class="btn btn-success" (click)="onAddIngredient()">Ajouter un ingredient</button>
+        <button type="button" mat-raised-button color="primary" (click)="onAddIngredient()">Ajouter un ingredient</button>
       </div>
       <div>
-        <button type="button" class="btn btn-success" (click)="onAddInstruction()">Ajouter une instruction</button>
+        <button type="button" mat-raised-button color="primary" (click)="onAddInstruction()">Ajouter une instruction</button>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Enregistrer</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!recipeForm.valid">Enregistrer</button>
+
     </form>
   </div>
 </div>

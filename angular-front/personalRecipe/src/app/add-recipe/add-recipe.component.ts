@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RecipeService } from '../shared/recipe.service';
 
 @Component({
   selector: 'app-add-recipe',
@@ -9,7 +11,9 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 export class AddRecipeComponent implements OnInit {
   recipeForm: FormGroup;
 
-  constructor() {}
+  constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -18,12 +22,12 @@ export class AddRecipeComponent implements OnInit {
   onAddIngredient(): void {
     (this.recipeForm.get('ingredients') as FormArray).push(
       new FormGroup({
-        ingredientName: new FormControl('', Validators.required),
-        ingredientQuantity: new FormControl('', [
+        nom: new FormControl('', Validators.required),
+        quantite: new FormControl(null, [
           Validators.required,
-          Validators.pattern(/^[1-9]+[0-9]*$/),
+          Validators.pattern(/^[1-9]+[0-9]*$/)
         ]),
-        ingredientUnit: new FormControl('', Validators.required),
+        unite: new FormControl('', Validators.required),
       })
     );
   }
@@ -31,19 +35,25 @@ export class AddRecipeComponent implements OnInit {
   onAddInstruction(): void {
     (this.recipeForm.get('instructions') as FormArray).push(
       new FormGroup({
-        instructionDescription: new FormControl('', Validators.required),
+        description: new FormControl('', Validators.required),
       })
     );
   }
 
   private initForm(): void {
     this.recipeForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      imagePath: new FormControl('', Validators.required),
+      nom: new FormControl('', Validators.required),
+      pathPhoto: new FormControl('', Validators.required),
+      nbPersonnes: new FormControl(null,  [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       ingredients: new FormArray([]),
       instructions: new FormArray([]),
     });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.recipeService.addRecipe(this.recipeForm.value);
+  }
+
+
+
 }

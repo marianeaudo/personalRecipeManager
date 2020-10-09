@@ -12,7 +12,7 @@
     <div *ngFor="let instruction of selectedRecipe.instructions">
       <p>{{ instruction.description }} </p>
     </div>
-    <button mat-button color="warn" (click)="onDeleteRecipe(selectedRecipe)">Supprimer la recette</button>
+    <button mat-raised-button color="warn" (click)="onDeleteRecipe(selectedRecipe)">Supprimer la recette</button>
 
   </div>
 </div>
