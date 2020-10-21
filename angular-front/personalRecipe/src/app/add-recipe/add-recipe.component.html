@@ -34,7 +34,7 @@
                     <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['nom'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="standard">
-                    <mat-label for="quantite">Quantite</mat-label>
+                    <mat-label for="quantite">Quantité</mat-label>
                     <input matInput type="number" placeholder="Quantité" id="quantite" formControlName="quantite" class="form-control">
                     <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['quantite'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
@@ -76,7 +76,7 @@
         </form>
       </div>
     </div>
-    <div *ngIf="pathPhoto != null" class="col-4">
+    <div *ngIf="pathPhoto" class="col-4">
       <img class="photo" alt="Erreur à l'affichage de la photo" [src]="pathPhoto">
     </div>
 </div>

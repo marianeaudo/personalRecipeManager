@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personalRecipe.bll.RecetteManager;
+import com.personalRecipe.bo.Ingredient;
+import com.personalRecipe.bo.Instruction;
 import com.personalRecipe.bo.Recette;
 
 @RestController
@@ -29,6 +31,12 @@ public class RecetteWS {
 	@CrossOrigin
 	@PostMapping(value = "createRecette")
 	public void createRecette(@RequestBody Recette recette) {
+		for (Ingredient ingredient : recette.getIngredients()) {
+			ingredient.setRecette(recette);
+		}
+		for(Instruction instruction: recette.getInstructions()) {
+			instruction.setRecette(recette);
+		}
 		this.recetteManager.createRecipe(recette);
 	}
 

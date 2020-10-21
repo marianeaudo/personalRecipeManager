@@ -8,7 +8,7 @@ import { Recipe} from './application.model';
 })
 export class HttpService {
 
-  private address: string = 'http://localhost:8080';
+  private address = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
   }

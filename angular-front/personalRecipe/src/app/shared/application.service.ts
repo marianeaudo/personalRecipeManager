@@ -11,17 +11,26 @@ export class ApplicationService {
 
   headers: Header[] = [
     {name: 'Trouver une recette', icon: 'book', route: '/'},
-    {name: 'Ajouter une recette', icon: 'add', route: '/ajout'},
-    {name: 'Modifier une recette', icon: 'cached', route: '/modifier'}
+    {name: 'Ajouter une recette', icon: 'add', route: '/ajout'}
   ];
 
   private selectedHeader: Header;
   selectedHeaderSubject = new Subject<Header>();
 
+  private editMode = false;
+
   constructor(private http: HttpClient) { }
 
   getHeaders(): Header[] {
     return [...this.headers];
+  }
+
+  setEditMode(editMode: boolean): void {
+    this.editMode = editMode;
+  }
+
+  getEditMode(): boolean {
+    return this.editMode;
   }
 
   setSelectedHeader(header: Header): void {

@@ -22,6 +22,10 @@ export class RecipeService {
     private httpService: HttpService
   ) {}
 
+  getSelectedRecipe(): Recipe {
+    return {...this.selectedRecipe};
+  }
+
   getRecipes(): void {
     this.httpService.getRecipes$().subscribe(
       (recipes: Recipe[]) => {
@@ -45,6 +49,12 @@ export class RecipeService {
   }
 
   createRecipe(recipe: Recipe): void {
+    for (const ingredient of recipe.ingredients) {
+      if (ingredient.unite === 'Pas d\'unité') {
+        ingredient.unite = '';
+      }
+    }
+
     this.httpService.addRecipe$(recipe).subscribe(
       () => {
         this.uIService.showSnackbar('La recette a bien été ajoutée.');

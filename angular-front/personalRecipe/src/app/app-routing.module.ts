@@ -5,8 +5,7 @@ import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 
 const routes: Routes = [
   { path: '', component: FindRecipeComponent},
-  { path: 'ajout', component: AddRecipeComponent},
-  { path: 'modifier', component: AddRecipeComponent}
+  { path: 'ajout', component: AddRecipeComponent}
 ];
 
 @NgModule({

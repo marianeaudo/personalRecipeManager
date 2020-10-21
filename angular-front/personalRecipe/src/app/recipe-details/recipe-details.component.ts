@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RecipeService } from '../shared/recipe.service';
 import { Recipe } from '../shared/application.model';
+import { ApplicationService } from '../shared/application.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-details',
@@ -15,7 +17,11 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   isSelectedRecipe: boolean;
   isSelectedRecipeSubscription: Subscription;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(
+    private recipeService: RecipeService,
+    private applicationService: ApplicationService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.selectedRecipeSubscription = this.recipeService.selectedRecipeSubject.subscribe(
@@ -31,7 +37,8 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUpdateRecipe(): void {
-
+    this.applicationService.setEditMode(true);
+    this.router.navigate(['../ajout'], { relativeTo: this.route });
   }
 
   onDeleteRecipe(recipe: Recipe): void {
