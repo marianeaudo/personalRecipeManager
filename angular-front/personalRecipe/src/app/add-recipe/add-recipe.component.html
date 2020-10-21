@@ -1,63 +1,83 @@
-<div class="container">
-  <div class="col-xs-12">
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" id="nom" formControlName="nom" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="pathPhoto">Lien de l'image</label>
-            <input type="text" id="pathPhoto" formControlName="pathPhoto" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="nbPersonnes">Nombre de personnes</label>
-            <input type="number" id="nbPersonnes" formControlName="nbPersonnes" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div formArrayName="ingredients">
-            <div *ngFor="let value of recipeForm.get('ingredients')['controls']; let i = index" [formGroupName]="i">
-              <label for="nom">Nom</label>
-              <input type="text" id="nom" class="form-control" formControlName="nom">
-              <label for="quantite">Quantité</label>
-              <input type="number" id="quantite" class="form-control" formControlName="quantite">
-              <label for="unite">Unité</label>
-              <input type="text" id="unite" class="form-control" formControlName="unite">
+<div class="container-fluid">
+  <div class='row'>
+    <div class="col-8">
+      <div class="col-xs-12">
+        <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <mat-form-field appearance="standard">
+                  <mat-label for="nom">Nom</mat-label>
+                  <input matInput placeholder="Nom" id="nom" formControlName="nom" class="form-control">
+                  <mat-error *ngIf="recipeForm.get('nom').errors?.required">Le champ est obligatoire.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label for="pathPhoto">Lien de l'image</mat-label>
+                  <input matInput placeholder="Lien de l'image" (change)="updatePath($event)" id="pathPhoto" formControlName="pathPhoto" class="form-control">
+                  <mat-error *ngIf="recipeForm.get('pathPhoto').errors?.required">Le champ est obligatoire.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label for="nbPersonnes">Nombre de personnes</mat-label>
+                  <input matInput type="number" placeholder="Nombre de personnes" id="nbPersonnes" formControlName="nbPersonnes" class="form-control">
+                  <mat-error *ngIf="recipeForm.get('nbPersonnes').errors?.required">Le champ est obligatoire.</mat-error>
+                </mat-form-field>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div formArrayName="instructions">
-            <div *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
-              <label for="description">Description</label>
-              <input type="text" id="description" class="form-control"
-                formControlName="description">
+          <div class="row">
+            <div class="col-xs-12">
+              <div formArrayName="ingredients">
+                <div *ngFor="let value of recipeForm.get('ingredients')['controls']; let i = index" [formGroupName]="i">
+                  <mat-form-field appearance="standard">
+                    <mat-label for="nom">Nom</mat-label>
+                    <input matInput placeholder="Nom" id="nom" formControlName="nom" class="form-control">
+                    <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['nom'].errors?.required">Le champ est obligatoire.</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="standard">
+                    <mat-label for="quantite">Quantite</mat-label>
+                    <input matInput type="number" placeholder="Quantité" id="quantite" formControlName="quantite" class="form-control">
+                    <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['quantite'].errors?.required">Le champ est obligatoire.</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="standard">
+                    <mat-label for="unite">Unité</mat-label>
+                    <mat-select formControlName="unite">
+                      <mat-option *ngFor="let unite of unites" [value]="unite">
+                        {{ unite }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['unite'].errors?.required">Le champ est obligatoire.</mat-error>
+                  </mat-form-field>
+                  <button type="button" mat-raised-button color="warn" (click)="onDeleteIngredient(i)">X</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div formArrayName="instructions">
+                <div *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
+                  <mat-form-field appearance="standard">
+                    <mat-label for="description">Description</mat-label>
+                    <textarea rows="5" matInput placeholder="Description" id="description" formControlName="description" class="form-control"></textarea>
+                    <mat-error *ngIf="recipeForm.get('instructions')['controls'][i]['controls']['description'].errors?.required">Le champ est obligatoire.</mat-error>
+                  </mat-form-field>
+                  <button type="button" mat-raised-button color="warn" (click)="onDeleteInstruction(i)">X</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button type="button" mat-raised-button color="primary" (click)="onAddIngredient()">Ajouter un ingredient</button>
+            <button type="button" mat-raised-button color="primary" (click)="onAddInstruction()">Ajouter une instruction</button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!recipeForm.valid">Enregistrer</button>
+          </div>
+          <div>
+          </div>
+        </form>
       </div>
-      <div>
-        <button type="button" mat-raised-button color="primary" (click)="onAddIngredient()">Ajouter un ingredient</button>
-      </div>
-      <div>
-        <button type="button" mat-raised-button color="primary" (click)="onAddInstruction()">Ajouter une instruction</button>
-      </div>
-      <button type="submit" mat-raised-button color="primary" [disabled]="!recipeForm.valid">Enregistrer</button>
-
-    </form>
-  </div>
+    </div>
+    <div *ngIf="pathPhoto != null" class="col-4">
+      <img class="photo" alt="Erreur à l'affichage de la photo" [src]="pathPhoto">
+    </div>
+</div>
 </div>

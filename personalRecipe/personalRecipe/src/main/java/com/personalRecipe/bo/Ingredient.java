@@ -1,5 +1,6 @@
 package com.personalRecipe.bo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Ingredient {
 	private String nom;
 	private double quantite;
 	private String unite;
-	@ManyToOne()
+	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonBackReference
 	private Recette recette;
 	

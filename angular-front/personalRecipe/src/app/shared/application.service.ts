@@ -11,7 +11,8 @@ export class ApplicationService {
 
   headers: Header[] = [
     {name: 'Trouver une recette', icon: 'book', route: '/'},
-    {name: 'Ajouter une recette', icon: 'add', route: '/ajout'}
+    {name: 'Ajouter une recette', icon: 'add', route: '/ajout'},
+    {name: 'Modifier une recette', icon: 'cached', route: '/modifier'}
   ];
 
   private selectedHeader: Header;

@@ -10,6 +10,8 @@ import { RecipeService } from '../shared/recipe.service';
 })
 export class AddRecipeComponent implements OnInit {
   recipeForm: FormGroup;
+  unites: string[] = ['-', 'g', 'cL', 'L', 'c.s', 'c.c', 'pincée'];
+  pathPhoto: string;
 
   constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute) {
 
@@ -27,7 +29,7 @@ export class AddRecipeComponent implements OnInit {
           Validators.required,
           Validators.pattern(/^[1-9]+[0-9]*$/)
         ]),
-        unite: new FormControl('', Validators.required),
+        unite: new FormControl('-', Validators.required),
       })
     );
   }
@@ -50,11 +52,22 @@ export class AddRecipeComponent implements OnInit {
     });
   }
 
+  updatePath(event: any): void {
+    if (event != null) {
+      this.pathPhoto = event.target.value;
+    }
+  }
+
+  onDeleteIngredient(i: number): void {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(i);
+  }
+
+  onDeleteInstruction(i: number): void {
+    (this.recipeForm.get('instructions') as FormArray).removeAt(i);
+  }
+
   onSubmit(): void {
     this.recipeService.createRecipe(this.recipeForm.value);
     this.router.navigate(['../'], {relativeTo: this.route});
   }
-
-
-
 }

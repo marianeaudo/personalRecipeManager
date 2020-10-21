@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Header } from 'src/app/shared/application.model';
+import { ApplicationService } from 'src/app/shared/application.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,16 +9,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  headers = [
-    {name: 'Trouver une recette', icon: 'book', route: ''},
-    {name: 'Ajouter une recette', icon: 'add', route: 'ajout'}
-  ];
+  headers: Header[] = [];
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private applicationService: ApplicationService) { }
 
   ngOnInit(): void {
+    this.headers = this.applicationService.getHeaders();
   }
 
   onToggle(): void {

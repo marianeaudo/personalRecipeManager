@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personalRecipe.bll.RecetteManager;
-import com.personalRecipe.bo.Ingredient;
-import com.personalRecipe.bo.Instruction;
 import com.personalRecipe.bo.Recette;
 
 @RestController

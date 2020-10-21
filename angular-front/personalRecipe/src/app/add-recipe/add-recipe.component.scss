@@ -1,0 +1,21 @@
+::ng-deep .mat-form-field-wrapper {
+  margin-right: 5px;
+}
+
+.mat-raised-button {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.container-fluid {
+  margin-left: 1%;
+}
+
+.photo {
+  max-width: 200 px;
+  max-height: 200px;
+}
+
+::ng-deep .mat-select-value {
+  height: 25px;
+}

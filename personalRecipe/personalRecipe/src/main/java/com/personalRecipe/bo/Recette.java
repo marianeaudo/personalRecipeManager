@@ -27,9 +27,9 @@ public class Recette {
 	private String nom;
 	private String pathPhoto;
 	@OneToMany(mappedBy = "recette", cascade = CascadeType.ALL)
-	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
+	private List<Ingredient> ingredients = new ArrayList<>();
 	@OneToMany(mappedBy = "recette", cascade = CascadeType.ALL)
-	private List<Instruction> instructions = new ArrayList<Instruction>();
+	private List<Instruction> instructions = new ArrayList<>();
 	
 	public Recette() {
 	}
@@ -40,4 +40,13 @@ public class Recette {
 		this.pathPhoto = pathPhoto;
 	}
 	
+	public void addIngredient(Ingredient ingredient) {
+		ingredients.add(ingredient);
+		ingredient.setRecette(this);
+	}
+	
+	public void addInstruction(Instruction instruction) {
+		instructions.add(instruction);
+		instruction.setRecette(this);
+	}
 }

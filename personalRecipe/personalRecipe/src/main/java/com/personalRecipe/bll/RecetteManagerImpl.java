@@ -1,13 +1,10 @@
 package com.personalRecipe.bll;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.personalRecipe.bo.Ingredient;
-import com.personalRecipe.bo.Instruction;
 import com.personalRecipe.bo.Recette;
 import com.personalRecipe.dal.RecetteRepository;
 

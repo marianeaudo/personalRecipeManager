@@ -1,5 +1,6 @@
 package com.personalRecipe.bo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Instruction {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String description;
-	@ManyToOne()
+	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonBackReference
 	private Recette recette;
 	
