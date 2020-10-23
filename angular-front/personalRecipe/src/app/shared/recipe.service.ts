@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { Recipe } from './application.model';
 import { UIService } from './ui.service';
 import { HttpService } from './http.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,9 @@ export class RecipeService {
 
   constructor(
     private uIService: UIService,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   getSelectedRecipe(): Recipe {
@@ -49,15 +52,28 @@ export class RecipeService {
   }
 
   createRecipe(recipe: Recipe): void {
-    for (const ingredient of recipe.ingredients) {
-      if (ingredient.unite === 'Pas d\'unité') {
-        ingredient.unite = '';
-      }
-    }
+
+    this.checkUnit(recipe);
 
     this.httpService.addRecipe$(recipe).subscribe(
       () => {
         this.uIService.showSnackbar('La recette a bien été ajoutée.');
+        this.router.navigate(['../'], { relativeTo: this.route });
+      },
+      (error) => {
+        this.uIService.showSnackbar(
+          'Une erreur est survenue, veuillez réessayer.'
+        );
+      }
+    );
+  }
+
+  editRecipe(recipe: Recipe): void {
+    this.checkUnit(recipe);
+    this.httpService.updateRecipe$(recipe).subscribe(
+      () => {
+        this.uIService.showSnackbar('La recette a bien été mise à jour.');
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
       (error) => {
         this.uIService.showSnackbar(
@@ -80,5 +96,13 @@ export class RecipeService {
         );
       }
     );
+  }
+
+  checkUnit(recipe: Recipe): void {
+    for (const ingredient of recipe.ingredients) {
+      if (ingredient.unite === 'Pas d\'unité') {
+        ingredient.unite = '';
+      }
+    }
   }
 }

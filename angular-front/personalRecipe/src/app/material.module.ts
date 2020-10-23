@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule
     ],
   exports: [
     MatSidenavModule,
@@ -40,7 +42,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule
     ]
 })
 

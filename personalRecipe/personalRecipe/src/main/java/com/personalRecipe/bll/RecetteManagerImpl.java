@@ -28,5 +28,10 @@ public class RecetteManagerImpl implements RecetteManager{
 	public void createRecipe(Recette recette) {
 		recetteDAO.save(recette);
 	}
+	
+	@Override
+	public void updateRecipe(Recette recette) {
+		recetteDAO.save(recette);
+	}
 
 }

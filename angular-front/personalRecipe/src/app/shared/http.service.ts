@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recipe} from './application.model';
@@ -19,6 +19,10 @@ export class HttpService {
 
   addRecipe$(recette: Recipe): Observable<void> {
     return this.http.post<void>(this.address + '/createRecette', recette);
+  }
+
+  updateRecipe$(recette: Recipe): Observable<void> {
+    return this.http.post<void>(this.address + '/updateRecette', recette);
   }
 
   deleteRecipe$(id: number): Observable<void> {

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { RecipeService } from '../shared/recipe.service';
 import { ApplicationService } from '../shared/application.service';
 import { Recipe } from '../shared/application.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-add-recipe',
@@ -113,9 +114,20 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.recipeService.createRecipe(this.recipeForm.value);
-    this.router.navigate(['../'], { relativeTo: this.route });
+    if (this.editMode) {
+      const recette = {
+        id: this.selectedRecipe.id,
+        ...this.recipeForm.value
+      } as Recipe;
+      this.recipeService.editRecipe(recette);
+    } else {
+      this.recipeService.createRecipe(this.recipeForm.value);
+    }
   }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.recipeForm.get('instructions')['controls'], event.previousIndex, event.currentIndex);
+    moveItemInArray(this.recipeForm.get('instructions').value, event.previousIndex, event.currentIndex);  }
 
   ngOnDestroy(): void {
     this.applicationService.setEditMode(false);

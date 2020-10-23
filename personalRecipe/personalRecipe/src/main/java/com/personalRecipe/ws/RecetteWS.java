@@ -39,6 +39,18 @@ public class RecetteWS {
 		}
 		this.recetteManager.createRecipe(recette);
 	}
+	
+	@CrossOrigin
+	@PostMapping(value="updateRecette")
+	public void updateRecette(@RequestBody Recette recette) {
+		for (Ingredient ingredient : recette.getIngredients()) {
+			ingredient.setRecette(recette);
+		}
+		for(Instruction instruction: recette.getInstructions()) {
+			instruction.setRecette(recette);
+		}
+		this.recetteManager.updateRecipe(recette);
+	}
 
 	@CrossOrigin
 	@RequestMapping(value = "deleteRecette")
