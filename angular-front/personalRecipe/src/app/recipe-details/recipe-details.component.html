@@ -11,7 +11,7 @@
       <p>{{ ingredient.quantite | number : '1.0-0': 'fr' }} {{ ingredient.unite }} {{ ingredient.nom }} </p>
     </div>
     <div *ngFor="let instruction of selectedRecipe.instructions">
-      <p>{{ instruction.description }} </p>
+      <p>{{ instruction.ordre }}. {{ instruction.description }} </p>
     </div>
     <button mat-raised-button color="accent" (click)="onUpdateRecipe()">Modifier la recette</button>
     <button mat-raised-button color="warn" (click)="onDeleteRecipe(selectedRecipe)">Supprimer la recette</button>

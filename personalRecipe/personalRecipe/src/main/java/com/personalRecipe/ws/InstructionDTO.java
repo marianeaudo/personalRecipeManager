@@ -9,5 +9,6 @@ public class InstructionDTO implements Serializable {
 	
 	private int id;
 	private String description;
+	private int ordre;
 
 }

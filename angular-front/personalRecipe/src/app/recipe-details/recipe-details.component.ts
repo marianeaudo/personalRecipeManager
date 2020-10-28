@@ -27,6 +27,9 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     this.selectedRecipeSubscription = this.recipeService.selectedRecipeSubject.subscribe(
       (recipe: Recipe) => {
         this.selectedRecipe = recipe;
+        this.selectedRecipe.instructions.sort((a,b) => {
+          return a.ordre - b.ordre;
+        });
       }
     );
     this.isSelectedRecipeSubscription = this.recipeService.isSelectedRecipeSubject.subscribe(

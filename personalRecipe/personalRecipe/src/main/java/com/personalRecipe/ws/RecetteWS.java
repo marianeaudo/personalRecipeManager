@@ -113,6 +113,7 @@ public class RecetteWS {
 	private InstructionDTO createInstructionDTO(Instruction instruction) {
 		InstructionDTO instructionDTO = new InstructionDTO();
 		instructionDTO.setId(instruction.getId());
+		instructionDTO.setOrdre(instruction.getOrdre());
 		instructionDTO.setDescription(instruction.getDescription());
 		return instructionDTO;
 	}
@@ -145,6 +146,7 @@ public class RecetteWS {
 				recette.addInstruction(instruction);
 			}
 			instruction.setDescription(instructionDTO.getDescription());
+			instruction.setOrdre(instructionDTO.getOrdre());
 			return instruction;
 		}).collect(Collectors.toList()));
 	}

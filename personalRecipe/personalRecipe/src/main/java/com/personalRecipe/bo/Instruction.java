@@ -17,6 +17,7 @@ public class Instruction {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String description;
+	private int ordre;
 	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonBackReference
 	private Recette recette;
@@ -43,6 +44,14 @@ public class Instruction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public int getOrdre() {
+		return ordre;
+	}
+	
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
+	}
 
 	public Recette getRecette() {
 		return recette;
@@ -60,7 +69,7 @@ public class Instruction {
 
 	@Override
 	public String toString() {
-		return "Instruction [id=" + id + ", description=" + description + "]";
-	}	
+		return "Instruction [id=" + id + ", description=" + description + ", ordre=" + ordre + "]";
+	}
 	
 }

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../shared/recipe.service';
 import { ApplicationService } from '../shared/application.service';
 import { Recipe } from '../shared/application.model';
@@ -30,16 +29,15 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
 
   constructor(
     private applicationService: ApplicationService,
-    private recipeService: RecipeService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private recipeService: RecipeService)
+    {}
 
   ngOnInit(): void {
     this.editMode = this.applicationService.getEditMode();
     this.selectedRecipe = this.recipeService.getSelectedRecipe();
     this.initForm();
     this.pathPhoto = this.selectedRecipe.pathPhoto;
+    console.log(this.recipeForm.get('instructions')['controls']);
     }
 
   onAddIngredient(): void {
@@ -60,7 +58,9 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
     (this.recipeForm.get('instructions') as FormArray).push(
       new FormGroup({
         id: new FormControl(0),
-        description: new FormControl('', Validators.required)
+        description: new FormControl('', Validators.required),
+        // ordre: new FormControl({value: this.recipeForm.get('instructions')['controls'].length + 1, disabled: false}, Validators.required)
+        ordre: new FormControl({value: 1, disabled: false}, Validators.required)
       })
     );
   }
@@ -95,6 +95,10 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
             id: new FormControl(instruction.id),
             description: new FormControl(
               instruction.description,
+              Validators.required
+            ),
+            ordre: new FormControl(
+              {value: instruction.ordre, disabled: false},
               Validators.required
             )
           })
@@ -134,6 +138,12 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
         id: this.selectedRecipe.id,
         ...this.recipeForm.value
       } as Recipe;
+      let compteur = 1;
+      recette.instructions.forEach(instruction => {
+        instruction.ordre = compteur;
+        compteur += 1;
+      })
+      console.log(this.recipeForm.value);
       this.recipeService.editRecipe(recette);
     } else {
       this.recipeService.createRecipe(this.recipeForm.value);
@@ -141,13 +151,14 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(
+      moveItemInArray(
+        this.recipeForm.get('instructions').value,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      moveItemInArray(
       this.recipeForm.get('instructions')['controls'],
-      event.previousIndex,
-      event.currentIndex
-    );
-    moveItemInArray(
-      this.recipeForm.get('instructions').value,
       event.previousIndex,
       event.currentIndex
     );

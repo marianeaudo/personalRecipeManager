@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
   <div class='row'>
     <div class="col-8">
@@ -7,18 +8,18 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <mat-form-field appearance="standard">
-                  <mat-label for="nom">Nom</mat-label>
-                  <input matInput placeholder="Nom" id="nom" formControlName="nom" class="form-control">
+                  <mat-label>Nom</mat-label>
+                  <input matInput placeholder="Nom" formControlName="nom" class="form-control">
                   <mat-error *ngIf="recipeForm.get('nom').errors?.required">Le champ est obligatoire.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="standard">
-                  <mat-label for="pathPhoto">Lien de l'image</mat-label>
-                  <input matInput placeholder="Lien de l'image" (change)="updatePath($event)" id="pathPhoto" formControlName="pathPhoto" class="form-control">
+                  <mat-label>Lien de l'image</mat-label>
+                  <input matInput placeholder="Lien de l'image" (change)="updatePath($event)" formControlName="pathPhoto" class="form-control">
                   <mat-error *ngIf="recipeForm.get('pathPhoto').errors?.required">Le champ est obligatoire.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="standard">
-                  <mat-label for="nbPersonnes">Nombre de personnes</mat-label>
-                  <input matInput type="number" placeholder="Nombre de personnes" id="nbPersonnes" formControlName="nbPersonnes" class="form-control">
+                  <mat-label>Nombre de personnes</mat-label>
+                  <input matInput type="number" placeholder="Nombre de personnes" formControlName="nbPersonnes" class="form-control">
                   <mat-error *ngIf="recipeForm.get('nbPersonnes').errors?.required">Le champ est obligatoire.</mat-error>
                 </mat-form-field>
               </div>
@@ -29,13 +30,13 @@
               <div formArrayName="ingredients">
                 <div *ngFor="let value of recipeForm.get('ingredients')['controls']; let i = index" [formGroupName]="i">
                   <mat-form-field appearance="standard">
-                    <mat-label for="nom">Nom</mat-label>
-                    <input matInput placeholder="Nom" id="nom" formControlName="nom" class="form-control">
+                    <mat-label>Nom</mat-label>
+                    <input matInput placeholder="Nom" formControlName="nom" class="form-control">
                     <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['nom'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="standard">
-                    <mat-label for="quantite">Quantité</mat-label>
-                    <input matInput type="number" placeholder="Quantité" id="quantite" formControlName="quantite" class="form-control">
+                    <mat-label>Quantité</mat-label>
+                    <input matInput type="number" placeholder="Quantité" formControlName="quantite" class="form-control">
                     <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['quantite'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="standard">
@@ -56,8 +57,8 @@
               <div formArrayName="instructions" cdkDropList (cdkDropListDropped)="drop($event)">
                 <div class="moving" cdkDrag *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
                   <mat-form-field appearance="standard">
-                    <mat-label for="description">Description</mat-label>
-                    <textarea rows="3" matInput placeholder="Description" formControlName="description" class="form-control"></textarea>
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Description" formControlName="description" class="form-control">
                     <mat-error *ngIf="recipeForm.get('instructions')['controls'][i]['controls']['description'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
                   <button type="button" mat-raised-button color="warn" (click)="onDeleteInstruction(i)">X</button>
