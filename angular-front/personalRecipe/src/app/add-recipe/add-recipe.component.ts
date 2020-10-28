@@ -37,7 +37,6 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
     this.selectedRecipe = this.recipeService.getSelectedRecipe();
     this.initForm();
     this.pathPhoto = this.selectedRecipe.pathPhoto;
-    console.log(this.recipeForm.get('instructions')['controls']);
     }
 
   onAddIngredient(): void {
@@ -142,8 +141,7 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       recette.instructions.forEach(instruction => {
         instruction.ordre = compteur;
         compteur += 1;
-      })
-      console.log(this.recipeForm.value);
+      });
       this.recipeService.editRecipe(recette);
     } else {
       this.recipeService.createRecipe(this.recipeForm.value);

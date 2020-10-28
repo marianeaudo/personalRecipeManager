@@ -58,7 +58,7 @@
                 <div class="moving" cdkDrag *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
                   <mat-form-field appearance="standard">
                     <mat-label>Description</mat-label>
-                    <input matInput placeholder="Description" formControlName="description" class="form-control">
+                    <textarea rows="3" matInput placeholder="Description" formControlName="description" class="form-control"></textarea>
                     <mat-error *ngIf="recipeForm.get('instructions')['controls'][i]['controls']['description'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
                   <button type="button" mat-raised-button color="warn" (click)="onDeleteInstruction(i)">X</button>
