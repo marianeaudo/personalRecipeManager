@@ -5,7 +5,7 @@
   <div fxFlex fxLayout fxLayoutAlign="space-around" fxHide.lt-md>
     <ul fxLayout fxLayoutGap="50px" class="navigation-items">
       <li *ngFor="let header of headers" routerLinkActive>
-        <a [ngClass]="isSelected(header)" [routerLink]="header.route">{{header.name}}</a>
+        <a [ngClass]="isSelected(header)" [routerLink]="header.route" (click)="onRemoveImage()">{{header.name}}</a>
       </li>
     </ul>
   </div>

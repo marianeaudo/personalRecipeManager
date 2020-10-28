@@ -40,7 +40,7 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
     this.selectedRecipe = this.recipeService.getSelectedRecipe();
     this.initForm();
     this.pathPhoto = this.selectedRecipe.pathPhoto;
-  }
+    }
 
   onAddIngredient(): void {
     (this.recipeForm.get('ingredients') as FormArray).push(

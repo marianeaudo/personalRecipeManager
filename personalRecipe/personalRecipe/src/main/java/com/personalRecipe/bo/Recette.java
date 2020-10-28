@@ -5,16 +5,13 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.Data;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 @Entity
 public class Recette {
@@ -87,11 +84,11 @@ public class Recette {
 		this.instructions = instructions;
 	}
 
-	@Override
-	public String toString() {
-		return "Recette [id=" + id + ", nbPersonnes=" + nbPersonnes + ", nom=" + nom + ", pathPhoto=" + pathPhoto
-				+ ", ingredients=" + ingredients + ", instructions=" + instructions + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Recette [id=" + id + ", nbPersonnes=" + nbPersonnes + ", nom=" + nom + ", pathPhoto=" + pathPhoto
+//				+ ", ingredients=" + ingredients + ", instructions=" + instructions + "]";
+//	}
 
 	public void addIngredient(Ingredient ingredient) {
 		this.ingredients.add(ingredient);

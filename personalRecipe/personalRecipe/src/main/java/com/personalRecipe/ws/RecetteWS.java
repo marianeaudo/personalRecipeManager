@@ -1,9 +1,11 @@
 package com.personalRecipe.ws;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,10 +56,27 @@ public class RecetteWS {
 		if (recette == null) {
 			recette = new Recette();
 		}
-		System.out.println(this.recetteManager.getRecipeById(recetteDTO.getId()));
+		
+		List<Instruction> instructionsOld = this.getListInstructions(recette);
+		List<Ingredient> ingredientsOld = this.getListIngredients(recette);
+		
 		this.updateCommonFields(recette, recetteDTO);
-		System.out.println(this.recetteManager.getRecipeById(recetteDTO.getId()));
-		System.out.println(recette);
+		
+		List<Instruction> instructionsNew = this.getListInstructions(recette);
+		List<Ingredient> ingredientsNew = this.getListIngredients(recette);
+				
+		instructionsOld.forEach(instruction -> {
+			if (!instructionsNew.contains(instruction)) {
+				this.instructionManager.deleteInstructionById(instruction.getId());
+			}
+		});
+		
+		ingredientsOld.forEach(ingredient -> {
+			if (!ingredientsNew.contains(ingredient)) {
+				this.ingredientManager.deleteIngredientById(ingredient.getId());
+			}
+		});	
+		
 		this.recetteManager.updateRecipe(recette);
 	}
 
@@ -128,5 +147,21 @@ public class RecetteWS {
 			instruction.setDescription(instructionDTO.getDescription());
 			return instruction;
 		}).collect(Collectors.toList()));
+	}
+	
+	private List<Ingredient> getListIngredients(Recette recette) {
+		List<Ingredient> ingredients = new ArrayList<>();
+		recette.getIngredients().forEach(ingredient -> {
+			ingredients.add(ingredient);
+		});
+		return ingredients;		
+	}
+	
+	private List<Instruction> getListInstructions(Recette recette) {
+		List<Instruction> instructions = new ArrayList<>();
+		recette.getInstructions().forEach(instruction -> {
+			instructions.add(instruction);
+		});
+		return instructions;		
 	}
 }

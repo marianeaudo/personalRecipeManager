@@ -3,6 +3,8 @@ package com.personalRecipe.bll;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.personalRecipe.bo.Ingredient;
@@ -41,22 +43,6 @@ public class RecetteManagerImpl implements RecetteManager {
 
 	@Override
 	public void updateRecipe(Recette recette) {
-		Recette recetteInitiale = this.recetteDAO.findById(recette.getId()).get();
-		System.out.println("recette intiale " + recetteInitiale);
-		System.out.println("recette " + recette);
-
-		recetteInitiale.getIngredients().forEach(ingredient -> {
-			if (!recette.getIngredients().contains(ingredient)) {
-				System.out.println("ingredient à supprimer " + ingredient);
-				ingredientDAO.deleteById(ingredient.getId());
-			}
-		});
-		recetteInitiale.getInstructions().forEach(instruction -> {
-			if (!recette.getInstructions().contains(instruction)) {
-				System.out.println("instruction à supprimer " + instruction);
-				instructionDAO.deleteById(instruction.getId());
-			}
-		});
 		recetteDAO.save(recette);
 	}
 

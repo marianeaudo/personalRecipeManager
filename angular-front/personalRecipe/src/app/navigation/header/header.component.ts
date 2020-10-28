@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Header } from 'src/app/shared/application.model';
 import { ApplicationService } from 'src/app/shared/application.service';
+import { RecipeService } from 'src/app/shared/recipe.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(private applicationService: ApplicationService, private router: Router) { }
+  constructor(private applicationService: ApplicationService,
+              private router: Router,
+              private recipeService: RecipeService
+              ) { }
 
   ngOnInit(): void {
     this.headers = this.applicationService.getHeaders();
@@ -46,6 +50,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (header.name === this.selectedHeader.name) {
       return 'selected';
     }
+  }
+
+  onRemoveImage(): void {
+    this.recipeService.setSelectedRecipe(null);
   }
 
   ngOnDestroy(): void {
