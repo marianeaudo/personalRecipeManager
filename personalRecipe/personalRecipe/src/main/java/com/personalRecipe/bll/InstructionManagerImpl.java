@@ -17,4 +17,18 @@ public class InstructionManagerImpl implements InstructionManager {
 		instructionDAO.save(instruction);		
 	}
 
+	@Override
+	public Instruction getInstructionById(int id) {
+		Instruction instruction = null;
+		if (id != 0) {
+			instruction = instructionDAO.findById(id).get();
+		} 
+		return instruction;
+	}
+
+	@Override
+	public void deleteInstructionById(int id) {
+		instructionDAO.deleteById(id);
+	}
+
 }

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { RecipeService } from '../shared/recipe.service';
 import { ApplicationService } from '../shared/application.service';
 import { Recipe } from '../shared/application.model';
@@ -14,7 +13,17 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class AddRecipeComponent implements OnInit, OnDestroy {
   recipeForm: FormGroup;
-  unites: string[] = ['Pas d\'unité', 'g', 'cL', 'L', 'c.s.', 'c.c.', 'pincée'];
+  unites: string[] = [
+    '',
+    'g',
+    'cL',
+    'L',
+    'c.s.',
+    'c.c.',
+    'pincée',
+    'noisette',
+    'pointe',
+  ];
   pathPhoto: string;
   editMode = false;
   selectedRecipe: Recipe;
@@ -36,12 +45,13 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   onAddIngredient(): void {
     (this.recipeForm.get('ingredients') as FormArray).push(
       new FormGroup({
+        id: new FormControl(0),
         nom: new FormControl('', Validators.required),
         quantite: new FormControl(null, [
           Validators.required,
-          Validators.pattern(/^[1-9]+[0-9]*$/),
+          Validators.pattern(/^(\d*\.)?\d+$/),
         ]),
-        unite: new FormControl('', Validators.required)
+        unite: new FormControl('')
       })
     );
   }
@@ -49,13 +59,13 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   onAddInstruction(): void {
     (this.recipeForm.get('instructions') as FormArray).push(
       new FormGroup({
+        id: new FormControl(0),
         description: new FormControl('', Validators.required)
       })
     );
   }
 
   private initForm(): void {
-
     let recipeNom: string;
     let recipePathPhoto: string;
     let recipeNbPersonnes: number;
@@ -69,19 +79,24 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       for (const ingredient of this.selectedRecipe.ingredients) {
         recipeIngredients.push(
           new FormGroup({
+            id: new FormControl(ingredient.id),
             nom: new FormControl(ingredient.nom, Validators.required),
             quantite: new FormControl(ingredient.quantite, [
               Validators.required,
-              Validators.pattern(/^[1-9]+[0-9]*$/),
+              Validators.pattern(/^(\d*\.)?\d+$/),
             ]),
-            unite: new FormControl(ingredient.unite, Validators.required)
+            unite: new FormControl(ingredient.unite)
           })
         );
       }
       for (const instruction of this.selectedRecipe.instructions) {
         recipeInstructions.push(
           new FormGroup({
-            description: new FormControl(instruction.description, Validators.required)
+            id: new FormControl(instruction.id),
+            description: new FormControl(
+              instruction.description,
+              Validators.required
+            )
           })
         );
       }
@@ -95,7 +110,7 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
         Validators.pattern(/^[1-9]+[0-9]*$/),
       ]),
       ingredients: recipeIngredients,
-      instructions: recipeInstructions
+      instructions: recipeInstructions,
     });
   }
 
@@ -126,8 +141,17 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.recipeForm.get('instructions')['controls'], event.previousIndex, event.currentIndex);
-    moveItemInArray(this.recipeForm.get('instructions').value, event.previousIndex, event.currentIndex);  }
+    moveItemInArray(
+      this.recipeForm.get('instructions')['controls'],
+      event.previousIndex,
+      event.currentIndex
+    );
+    moveItemInArray(
+      this.recipeForm.get('instructions').value,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
 
   ngOnDestroy(): void {
     this.applicationService.setEditMode(false);

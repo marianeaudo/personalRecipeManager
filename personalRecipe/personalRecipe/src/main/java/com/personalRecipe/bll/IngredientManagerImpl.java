@@ -17,6 +17,18 @@ public class IngredientManagerImpl implements IngredientManager {
 		daoIngredient.save(ingredient);
 	}
 
-	
+	@Override
+	public Ingredient getIngredientById(int id) {
+		Ingredient ingredient = null;
+		if (id != 0) {
+			ingredient = daoIngredient.findById(id).get();
+		}
+		return ingredient;
+	}
+
+	@Override
+	public void deleteIngredientById(int id) {
+		daoIngredient.deleteById(id);
+	}	
 	
 }

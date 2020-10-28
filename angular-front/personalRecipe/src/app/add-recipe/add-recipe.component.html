@@ -45,7 +45,6 @@
                         {{ unite }}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="recipeForm.get('ingredients')['controls'][i]['controls']['unite'].errors?.required">Le champ est obligatoire.</mat-error>
                   </mat-form-field>
                   <button type="button" mat-raised-button color="warn" (click)="onDeleteIngredient(i)">X</button>
                 </div>
@@ -55,7 +54,7 @@
           <div class="row">
             <div class="col-xs-12">
               <div formArrayName="instructions" cdkDropList (cdkDropListDropped)="drop($event)">
-                <div cdkDrag *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
+                <div class="moving" cdkDrag *ngFor="let instructions of recipeForm.get('instructions')['controls']; let i = index" [formGroupName]="i">
                   <mat-form-field appearance="standard">
                     <mat-label for="description">Description</mat-label>
                     <textarea rows="3" matInput placeholder="Description" formControlName="description" class="form-control"></textarea>

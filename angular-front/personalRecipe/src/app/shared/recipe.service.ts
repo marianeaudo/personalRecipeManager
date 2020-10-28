@@ -52,9 +52,6 @@ export class RecipeService {
   }
 
   createRecipe(recipe: Recipe): void {
-
-    this.checkUnit(recipe);
-
     this.httpService.addRecipe$(recipe).subscribe(
       () => {
         this.uIService.showSnackbar('La recette a bien été ajoutée.');
@@ -69,7 +66,6 @@ export class RecipeService {
   }
 
   editRecipe(recipe: Recipe): void {
-    this.checkUnit(recipe);
     this.httpService.updateRecipe$(recipe).subscribe(
       () => {
         this.uIService.showSnackbar('La recette a bien été mise à jour.');
@@ -98,11 +94,4 @@ export class RecipeService {
     );
   }
 
-  checkUnit(recipe: Recipe): void {
-    for (const ingredient of recipe.ingredients) {
-      if (ingredient.unite === 'Pas d\'unité') {
-        ingredient.unite = '';
-      }
-    }
-  }
 }

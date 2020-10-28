@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Entity
-@Data
 public class Instruction {
 
 	@Id
@@ -29,6 +28,41 @@ public class Instruction {
 	
 	public Instruction(String description) {
 		this.description = description;
-	}	
+	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Recette getRecette() {
+		return recette;
+	}
+
+	public void setRecette(Recette recette) {
+		this.recette = recette;
+	}
+
+	public Instruction(int id, String description) {
+		super();
+		this.id = id;
+		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "Instruction [id=" + id + ", description=" + description + "]";
+	}	
+	
 }

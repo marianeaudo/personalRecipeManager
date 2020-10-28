@@ -9,6 +9,7 @@ import com.personalRecipe.bo.Recette;
 public interface RecetteManager {
 
 	public List<Recette> getAll();
+	public Recette getRecipeById(int id);
 	public void createRecipe(Recette recette);
 	public void updateRecipe(Recette recette);
 	public void deleteRecipe(int id);

@@ -17,12 +17,12 @@ export class HttpService {
     return this.http.get<Recipe[]>(this.address + '/recettes');
   }
 
-  addRecipe$(recette: Recipe): Observable<void> {
-    return this.http.post<void>(this.address + '/createRecette', recette);
+  addRecipe$(recetteDTO: Recipe): Observable<void> {
+    return this.http.post<void>(this.address + '/createRecette', recetteDTO);
   }
 
-  updateRecipe$(recette: Recipe): Observable<void> {
-    return this.http.post<void>(this.address + '/updateRecette', recette);
+  updateRecipe$(recetteDTO: Recipe): Observable<void> {
+    return this.http.post<void>(this.address + '/updateRecette', recetteDTO);
   }
 
   deleteRecipe$(id: number): Observable<void> {

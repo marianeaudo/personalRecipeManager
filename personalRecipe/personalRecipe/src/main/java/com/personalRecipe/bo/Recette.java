@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Entity
-@Data
 public class Recette {
 
 	@Id
@@ -40,13 +39,67 @@ public class Recette {
 		this.pathPhoto = pathPhoto;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getNbPersonnes() {
+		return nbPersonnes;
+	}
+
+	public void setNbPersonnes(int nbPersonnes) {
+		this.nbPersonnes = nbPersonnes;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPathPhoto() {
+		return pathPhoto;
+	}
+
+	public void setPathPhoto(String pathPhoto) {
+		this.pathPhoto = pathPhoto;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	public List<Instruction> getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(List<Instruction> instructions) {
+		this.instructions = instructions;
+	}
+
+	@Override
+	public String toString() {
+		return "Recette [id=" + id + ", nbPersonnes=" + nbPersonnes + ", nom=" + nom + ", pathPhoto=" + pathPhoto
+				+ ", ingredients=" + ingredients + ", instructions=" + instructions + "]";
+	}
+
 	public void addIngredient(Ingredient ingredient) {
-		ingredients.add(ingredient);
+		this.ingredients.add(ingredient);
 		ingredient.setRecette(this);
 	}
 	
 	public void addInstruction(Instruction instruction) {
-		instructions.add(instruction);
+		this.instructions.add(instruction);
 		instruction.setRecette(this);
 	}
 }
