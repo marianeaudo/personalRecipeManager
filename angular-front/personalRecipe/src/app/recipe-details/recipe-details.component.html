@@ -1,7 +1,9 @@
+<div class="global">
 <div class="centrage">
   <p *ngIf="!isSelectedRecipe">
     Veuillez sélectionner une recette.
   </p>
+</div>
 
   <div *ngIf="isSelectedRecipe">
     <p class="titre">{{ selectedRecipe.nom }}</p>
@@ -15,6 +17,5 @@
     </div>
     <button mat-raised-button color="accent" (click)="onUpdateRecipe()">Modifier la recette</button>
     <button mat-raised-button color="warn" (click)="onDeleteRecipe(selectedRecipe)">Supprimer la recette</button>
-
   </div>
 </div>

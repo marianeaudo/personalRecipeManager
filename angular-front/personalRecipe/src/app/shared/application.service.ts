@@ -40,7 +40,7 @@ export class ApplicationService {
 
   translateMatPaginator(paginator: MatPaginator): void {
     paginator._intl.firstPageLabel = 'Première page';
-    paginator._intl.itemsPerPageLabel = 'Recettes par page';
+    paginator._intl.itemsPerPageLabel = 'Recettes/page';
     paginator._intl.lastPageLabel = 'Dernière page';
     paginator._intl.nextPageLabel = 'Page suivante';
     paginator._intl.previousPageLabel = 'Page précédente';

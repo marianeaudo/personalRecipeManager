@@ -53,29 +53,30 @@ public class RecetteWS {
 	@PostMapping(value="updateRecette")
 	public void updateRecette(@RequestBody RecetteDTO recetteDTO) {
 		Recette recette = this.recetteManager.getRecipeById(recetteDTO.getId());
+		
+		List<Integer> ingredientsId = this.getIngredientsId(recette);
+		List<Integer> instructionsId = this.getInstructionsId(recette);
+				
 		if (recette == null) {
 			recette = new Recette();
 		}
 		
-		List<Instruction> instructionsOld = this.getListInstructions(recette);
-		List<Ingredient> ingredientsOld = this.getListIngredients(recette);
-		
 		this.updateCommonFields(recette, recetteDTO);
-		
-		List<Instruction> instructionsNew = this.getListInstructions(recette);
-		List<Ingredient> ingredientsNew = this.getListIngredients(recette);
 				
-		instructionsOld.forEach(instruction -> {
-			if (!instructionsNew.contains(instruction)) {
-				this.instructionManager.deleteInstructionById(instruction.getId());
+		List<Integer> ingredientsIdUpdated = this.getIngredientsId(recette);
+		List<Integer> instructionsIdUpdated = this.getInstructionsId(recette);
+	
+		ingredientsId.forEach(ingredientId -> {
+			if (!ingredientsIdUpdated.contains(ingredientId)) {
+				this.ingredientManager.deleteIngredientById(ingredientId);
 			}
 		});
 		
-		ingredientsOld.forEach(ingredient -> {
-			if (!ingredientsNew.contains(ingredient)) {
-				this.ingredientManager.deleteIngredientById(ingredient.getId());
+		instructionsId.forEach(instructionId -> {
+			if (!instructionsIdUpdated.contains(instructionId)) {
+				this.instructionManager.deleteInstructionById(instructionId);
 			}
-		});	
+		});
 		
 		this.recetteManager.updateRecipe(recette);
 	}
@@ -151,19 +152,17 @@ public class RecetteWS {
 		}).collect(Collectors.toList()));
 	}
 	
-	private List<Ingredient> getListIngredients(Recette recette) {
-		List<Ingredient> ingredients = new ArrayList<>();
-		recette.getIngredients().forEach(ingredient -> {
-			ingredients.add(ingredient);
-		});
-		return ingredients;		
+	private List<Integer> getIngredientsId(Recette recette) {
+		List<Integer> ingredientsId = recette.getIngredients().stream()
+				.map(Ingredient::getId)
+				.collect(Collectors.toList());
+		return ingredientsId;
 	}
 	
-	private List<Instruction> getListInstructions(Recette recette) {
-		List<Instruction> instructions = new ArrayList<>();
-		recette.getInstructions().forEach(instruction -> {
-			instructions.add(instruction);
-		});
-		return instructions;		
+	private List<Integer> getInstructionsId(Recette recette) {
+		List<Integer> instructionsId = recette.getInstructions().stream()
+				.map(Instruction::getId)
+				.collect(Collectors.toList());
+		return instructionsId;	
 	}
 }

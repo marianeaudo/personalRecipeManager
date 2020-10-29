@@ -5,6 +5,7 @@ import { Recipe } from '../shared/application.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApplicationService } from '../shared/application.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-find-recipe',
@@ -20,6 +21,8 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
   selectedRecipeSubscription: Subscription;
   isLoading = false;
   isLoadingSubscription: Subscription;
+  myControl = new FormControl();
+  options: string[];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private recipeService: RecipeService, private applicationService: ApplicationService) {

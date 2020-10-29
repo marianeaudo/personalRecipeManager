@@ -58,8 +58,7 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       new FormGroup({
         id: new FormControl(0),
         description: new FormControl('', Validators.required),
-        // ordre: new FormControl({value: this.recipeForm.get('instructions')['controls'].length + 1, disabled: false}, Validators.required)
-        ordre: new FormControl({value: 1, disabled: false}, Validators.required)
+        ordre: new FormControl({value: this.recipeForm.get('instructions')['controls'].length + 1, disabled: false}, Validators.required)
       })
     );
   }
