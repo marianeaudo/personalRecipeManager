@@ -94,4 +94,10 @@ export class RecipeService {
     );
   }
 
+  getPathPhoto(recette: Recipe): string {
+    if (recette.nom) {
+      return '../../assets/recette/' + recette.nom + '.jpg';
+    }
+  }
+
 }

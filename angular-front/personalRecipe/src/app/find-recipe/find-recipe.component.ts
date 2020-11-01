@@ -82,6 +82,10 @@ export class FindRecipeComponent implements OnInit, OnDestroy {
     this.applicationService.translateMatPaginator(this.paginator);
   }
 
+  getPathPhoto(recette: Recipe): string {
+    return this.recipeService.getPathPhoto(recette);
+  }
+
   ngOnDestroy(): void {
     this.recipesSubscription.unsubscribe();
     this.isLoadingSubscription.unsubscribe();

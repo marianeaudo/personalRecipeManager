@@ -46,6 +46,10 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['../ajout'], { relativeTo: this.route });
   }
 
+  getPathPhoto(recette: Recipe): String {
+    return this.recipeService.getPathPhoto(recette);
+  }
+
   onDeleteRecipe(recipe: Recipe): void {
     this.recipeService.deleteRecipe(recipe.id);
   }

@@ -22,7 +22,6 @@ export class SidebarComponent implements OnInit {
 
   onToggle(): void {
     this.sidenavToggle.emit();
-    this.recipeService.setSelectedRecipe(null);
   }
 
 }

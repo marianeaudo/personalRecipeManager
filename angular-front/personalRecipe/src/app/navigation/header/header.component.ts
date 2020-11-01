@@ -52,10 +52,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  onRemoveImage(): void {
-    this.recipeService.setSelectedRecipe(null);
-  }
-
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe();
     this.selectedHeaderSubscription.unsubscribe();

@@ -36,7 +36,10 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
     this.editMode = this.applicationService.getEditMode();
     this.selectedRecipe = this.recipeService.getSelectedRecipe();
     this.initForm();
-    this.pathPhoto = this.selectedRecipe.pathPhoto;
+
+    if (this.selectedRecipe != null && this.editMode) {
+      this.pathPhoto = this.recipeService.getPathPhoto(this.selectedRecipe);
+      }
     }
 
   onAddIngredient(): void {
@@ -159,6 +162,10 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       event.previousIndex,
       event.currentIndex
     );
+  }
+
+  getPathPhoto(recette: Recipe): string {
+    return this.recipeService.getPathPhoto(recette);
   }
 
   ngOnDestroy(): void {
